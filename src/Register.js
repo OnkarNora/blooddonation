@@ -1,28 +1,44 @@
 import React from 'react'
 import {Form, Button, Spinner} from 'react-bootstrap';
 import {useState} from 'react'
-
+import {rapidapihost,rapidapikey} from './Private'
 function Register() {
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
     const [blood,setBlood] = useState('');
-    const [pincode,setPincode] = useState('');
+    const [pincode,setPincode] = useState(null);
     const [show,setShow] = useState('hidden');
     const [showerr,setShowerr] = useState('hidden');
     const [loading,setLoading] = useState(false);
 
     async function register(){
         setLoading(true);
+        console.log(process.env)
         if(name === '' || email === '' || blood === '' || pincode === ''){
             alert("one or more fields empty");
             setLoading(false);
             return ;
         }
+
+        // hitting a api for getting lat and long 
+        let loc = await fetch(`https://india-pincode-with-latitude-and-longitude.p.rapidapi.com/api/v1/pincode/${pincode}`, {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": rapidapihost,
+                "x-rapidapi-key": rapidapikey
+            }
+        })
+
+        loc = await loc.json();
+
+        console.log("location : ",loc);
+
         let data = {
             name:name,
             email:email,
             blood:blood,
-            pincode:pincode
+            pincode:pincode,
+            loc:[loc[0].lat,loc[0].lng]
         }
         console.log("data is : ",data);
         let result = await fetch("http://localhost:4000/donor",{
@@ -59,7 +75,7 @@ function Register() {
                 <input className="form-control" value={name} onChange={(e)=>{setName(e.target.value)}} type="text" placeholder="Enter Name" />
                 <input className="form-control" value={email} onChange={(e)=>{setEmail(e.target.value)}} type="text" placeholder="Enter Email" />
                 <input className="form-control" value={blood} onChange={(e)=>{setBlood(e.target.value)}} type="text" placeholder="Enter Blood Group (A+,A-,B+,B-,AB+,AB-,O+,O-)" />
-                <input className="form-control" value={pincode} onChange={(e)=>{setPincode(e.target.value)}} type="text" placeholder="Enter Pincode" />
+                <input className="form-control" value={pincode} onChange={(e)=>{setPincode(e.target.value)}} type="number" placeholder="Enter Pincode" />
             </Form>
                 <Button variant="dark" onClick={()=>{register()}} >Register</Button>
             <p className={show} >User has been Registered</p>

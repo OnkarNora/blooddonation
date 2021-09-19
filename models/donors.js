@@ -4,7 +4,9 @@ let userSchema = new mongoose.Schema({
     name:String,
     email:String,
     blood:String,
-    pincode:String
+    pincode:mongoose.Schema.Types.Number,
+    loc:mongoose.Schema.Types.Array,
+
 })
 
 module.exports = mongoose.model('donors',userSchema);

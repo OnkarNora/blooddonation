@@ -143,11 +143,13 @@ app.get("/search/:blood/:pincode", function (req, res) {
 
 })
 
+const PORT = process.env.PORT || 3001;
+
 app.use(express.static(path.resolve(__dirname, './build')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, './build', 'index.html'));
   });
 
-app.listen(process.env.PORT);
+app.listen(PORT);
 console.log(`app listening on port ${process.env.PORT} ...`);

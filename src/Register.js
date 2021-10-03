@@ -43,7 +43,7 @@ function Register() {
             loc:[loc[0].lat,loc[0].lng]
         }
         console.log("data is : ",data);
-        let result = await fetch("http://localhost:4000/donor",{
+        let result = await fetch("/donor",{
             method:'POST',
             headers:{
                 "Content-Type":"application/json",
@@ -51,7 +51,7 @@ function Register() {
             },
             body:JSON.stringify(data)
         }).catch((err)=>{
-            console.log(err);
+            console.log("error : ",err);
             setLoading(false);
             setShowerr('err text-danger m-5 text-center font-weight-bold h4 ');
             return ;

@@ -145,8 +145,9 @@ app.get("/search/:blood/:pincode", function (req, res) {
 
 app.use(express.static(path.resolve(__dirname, './build')));
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, './build', 'index.html'));
   });
 
-app.listen(4000);
+app.listen(3000);
+console.log("app listening on port 4000 ...");

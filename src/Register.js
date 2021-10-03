@@ -1,7 +1,9 @@
 import React from 'react'
 import {Form, Button, Spinner} from 'react-bootstrap';
 import {useState} from 'react'
-import {rapidapihost,rapidapikey} from './Private'
+require('dotenv').config();
+
+
 function Register() {
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
@@ -24,8 +26,8 @@ function Register() {
         let loc = await fetch(`https://india-pincode-with-latitude-and-longitude.p.rapidapi.com/api/v1/pincode/${pincode}`, {
             "method": "GET",
             "headers": {
-                "x-rapidapi-host": rapidapihost,
-                "x-rapidapi-key": rapidapikey
+                "x-rapidapi-host": process.env.REACT_APP_RAPID_HOST,
+                "x-rapidapi-key": process.env.REACT_APP_RAPID_API
             }
         })
 
@@ -66,7 +68,7 @@ function Register() {
         }
         console.log("result came out to be : ",result);
     }
-    
+    console.log(process.env);
     return (
         <div className="m-5">
             {/* Name , Blood Group , Pincode , Email */}

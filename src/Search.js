@@ -13,7 +13,7 @@ function Search() {
     async function search() {
         setShowerr('hidden');
         setLoading(true);
-        let result = await fetch(`http://localhost:4000/search/${blood}/${pincode}`).catch((err) => {
+        let result = await fetch(`/search/${blood}/${pincode}`).catch((err) => {
             console.log("error : ", err);
             setLoading(false);
             setShowerr('err text-danger m-5 text-center font-weight-bold h4 ');

@@ -5,6 +5,8 @@ const User = require('./models/donors');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 require('dotenv').config();
+var path = require('path')
+
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.6kf2q.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
     {
         useNewUrlParser: true,
@@ -140,5 +142,11 @@ app.get("/search/:blood/:pincode", function (req, res) {
     }
 
 })
+
+app.use(express.static(path.resolve(__dirname, './build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './build', 'index.html'));
+  });
 
 app.listen(4000);

@@ -68,7 +68,7 @@ function Register() {
         }
         console.log("result came out to be : ",result);
     }
-    console.log(process.env);
+    
     return (
         <div className="m-5">
             {/* Name , Blood Group , Pincode , Email */}
